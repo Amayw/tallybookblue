@@ -1,5 +1,10 @@
 <template>
-    <div>展示这个页面</div>
+<div>
+    <div>您输入的页面不存在，请检查网址</div>
+    <div>
+        <router-link to="/money">点击返回首页</router-link>
+    </div>
+</div>
 </template>
 
 <script lang="ts">
