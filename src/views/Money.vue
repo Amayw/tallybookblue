@@ -1,6 +1,8 @@
 <template>
-<div>
-    <div>Money</div>
+<div class="nav-wrapper">
+    <div class="content">
+        <p>Money</p>
+    </div>
     <Nav/>
 </div>
 </template>
@@ -10,7 +12,17 @@
         name: "Money",
     };
 </script>
-s
+
 <style lang="scss" scoped>
+.nav-wrapper{
+    border: 1px solid red;
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
+    > .content{
+        flex-grow: 1;
+        overflow: auto;
+    }
+}
 
 </style>
