@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div class="money">
-            <Category :category="category"/>
+            <Category :name="category"/>
             <Tags :tagsList="tagsList" :selectedTagId="selectedTagId"/>
             <Number/>
         </div>

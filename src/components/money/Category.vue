@@ -1,27 +1,27 @@
 <template>
     <div class="category">
         <ul  >
-            <li :class="category==='1'?'active':''" @click="changeCategory('1')">支出</li>
-            <li :class="category==='2'?'active':''" @click="changeCategory('2')">收入</li>
+            <li :class="category==='1'&&'active'" @click="changeCategory('1')">支出</li>
+            <li :class="category==='2'&&'active'" @click="changeCategory('2')">收入</li>
         </ul>
     </div>
 </template>
 
-<script lang="js">
-    export default {
-        name: 'Category',
-        // props:['category'],
-        data(){
-            return {
-                category:'1'//'1'表示支出，'2'表示收入
+<script lang="ts">
+    import Vue from 'vue';
+    import {Component, Prop} from 'vue-property-decorator';
+
+    @Component
+    export default class Category extends Vue{
+        @Prop(String) readonly name: string | undefined
+        category='1';//'1'表示支出，'2'表示收入
+        changeCategory(type: string){
+            if(type!=='1'&&type!=='2'){
+                return new Error('type is  unknown');
             }
-        },
-        methods:{
-            changeCategory(type){
-                this.category = type;
-            }
+            this.category = type;
         }
-    };
+    }
 </script>
 
 <style lang="scss" scoped>
