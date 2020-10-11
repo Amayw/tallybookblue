@@ -42,7 +42,6 @@
                 height: 26px;
             }
         }
-
         >.item.selected{
             color: #a3c7bb;
         }

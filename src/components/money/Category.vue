@@ -1,18 +1,43 @@
 <template>
-    <div>
+    <div class="category">
         <ul>
-            <li>支出</li>
-            <li>收入</li>
+            <li :class="category==='1'?'active':''">支出</li>
+            <li :class="category==='2'?'active':''">收入</li>
         </ul>
     </div>
 </template>
 
 <script lang="ts">
     export default {
-        name: 'Category'
+        name: 'Category',
+        props:['category']
     };
 </script>
 
 <style lang="scss" scoped>
-
+    .category{
+        background: #fefefe;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        >ul{
+            background: #ededed;
+            display: flex;
+            flex-direction: row;
+            padding: 2px;
+            border-radius: 8px;
+            >li{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 8px;
+                padding: 4px 20px;
+                border-radius: 8px;
+            }
+            >li.active{
+                background: #fefefe;
+            }
+        }
+    }
 </style>
