@@ -30,6 +30,7 @@
             align-items: center;
             padding: 5px;
             margin: 10px;
+            max-height: 100px;
             > .icon {
                 width: 60px;
                 height: 40px;
@@ -38,11 +39,12 @@
             > span {
                 font-size: 14px;
             }
-        }
-        >li.active{
-            background-color: #cde0da;
-            border: 1px solid #9fc4b7;
-            border-radius: 10px;
+
+            &.active{
+                background-color: #cde0da;
+                border: 1px solid #9fc4b7;
+                border-radius: 10px;
+            }
         }
     }
 </style>

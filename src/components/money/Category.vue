@@ -13,7 +13,6 @@
 
     @Component
     export default class Category extends Vue{
-        @Prop(String) readonly name: string | undefined
         category='1';//'1'表示支出，'2'表示收入
         changeCategory(type: string){
             if(type!=='1'&&type!=='2'){
