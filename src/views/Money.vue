@@ -3,7 +3,7 @@
         <div class="money">
             <Category :name="category"/>
             <Tags :tagsList="tagsList" :selectedTagId="selectedTagId"/>
-            <Number/>
+            <NumberPad/>
         </div>
     </Layout>
 </template>
@@ -11,7 +11,7 @@
 <script lang="ts">
     import Category from '@/components/money/Category.vue';
     import Tags from '@/components/money/Tags.vue';
-    import Number from '@/components/money/Number.vue';
+    import NumberPad from '@/components/money/NumberPad.vue';
 
     export default {
         name: 'Money',
@@ -47,7 +47,7 @@
                 selectedTagId: 3,
             };
         },
-        components: {Number, Tags, Category},
+        components: {NumberPad, Tags, Category},
     };
 </script>
 
