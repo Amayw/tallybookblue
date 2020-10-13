@@ -13,12 +13,13 @@
 
     @Component
     export default class Category extends Vue{
-        category='1';//'1'表示支出，'2'表示收入
+        @Prop(String) readonly category!: '1'|'2';//'1'表示支出，'2'表示收入
         changeCategory(type: string){
             if(type!=='1'&&type!=='2'){
                 return new Error('type is  unknown');
             }
-            this.category = type;
+            //通知父组件改值
+            this.$emit('update:category',type);
         }
     }
 </script>
