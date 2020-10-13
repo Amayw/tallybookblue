@@ -1,6 +1,6 @@
 <template>
     <ol class="tags">
-        <li v-for="tag in tagsList" :class="tag.id===selectedTagId?'active':''" :key="tag.id">
+        <li @click="changeSelectedTag(tag.id)" v-for="tag in tagsList" :class="tag.id===selectedTagId?'active':''" :key="tag.id">
             <Icon :name="tag.icon"/>
             <span>{{tag.name}}</span>
         </li>
@@ -8,10 +8,20 @@
 </template>
 
 <script lang="ts">
-    export default {
-        name: 'Tags',
-        props: ['tagsList','selectedTagId']
-    };
+    import Vue from 'vue';
+    import {Component, Prop} from 'vue-property-decorator';
+
+    @Component
+    export default class Tags extends Vue{
+        // props: ['tagsList','selectedTagId']
+        @Prop(Array)  tagsList: object[] | undefined;
+        @Prop(Number) selectedTagId: number | undefined;
+        changeSelectedTag(id: number){
+            if(id!==this.selectedTagId){
+                this.$emit('update:selectedTagId',id);
+            }
+        }
+    }
 </script>
 
 <style lang="scss" scoped>

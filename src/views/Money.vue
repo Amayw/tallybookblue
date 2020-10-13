@@ -2,7 +2,7 @@
     <Layout>
         <div class="money">
             <Category :name="category"/>
-            <Tags :tagsList="tagsList" :selectedTagId="selectedTagId"/>
+            <Tags :tagsList="tagsList" :selectedTagId.sync="selectedTagId"/>
             <NumberPad/>
         </div>
     </Layout>
