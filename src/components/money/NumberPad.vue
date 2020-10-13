@@ -1,7 +1,8 @@
 <template>
     <div class="numberWrapper">
         <div class="inputs">
-            <input class="left" placeholder="备注" />
+            <input class="left" placeholder="备注" v-model="notes"/>
+<!--            <input class="left" placeholder="备注" :value="notes" @input="notes=$event.target.value"/>-->
             <div class="right" placeholder="元">{{output}}元</div>
         </div>
         <div class="buttons" @click="sumMoney" >
@@ -32,6 +33,7 @@
     @Component
     export default class NumberPad extends Vue{
         output='0';
+        notes='';
 
         add(str: string){
             const arr=str.split('+');
@@ -119,7 +121,6 @@
                         if(text==='-'&&this.output==='0'){
                             alert('金额不能输入负数哦~');
                         }else{
-                            console.log('here');
                             this.output+=text;
                         }
                     }else{
@@ -135,18 +136,7 @@
                  }else{
                      this.output=this.output.slice(0,this.output.length-1);
                  }
-            }else if(text==='完成'){
-                if(this.output.indexOf('+')>=0){
-                    //判断是否有待计算的加运算
-                    this.output=this.add(this.output)!;
-                }else if(this.output.indexOf('-')>=0){
-                    //判断是否有待计算的减运算
-                    this.output=this.sub(this.output)!;
-                }else if(this.isNum(this.output)){
-                    //判断金额是否为数字，排除'3.'这种情况
-                    window.alert("记账成功！"+this.isFloat(this.output));
-                }
-            }else if(text==='.'){
+            }else  if(text==='.'){
                 //输入点
                 if(this.output.indexOf(text)>=0){
                     //一个数字中只能一个点
@@ -167,9 +157,19 @@
                 }else{
                     this.output+=text;
                 }
-            }
-
+            }else  if(text==='完成'){
+                if(this.output.indexOf('+')>=0){
+                    //判断是否有待计算的加运算
+                    this.output=this.add(this.output)!;
+                }else if(this.output.indexOf('-')>=0){
+                    //判断是否有待计算的减运算
+                    this.output=this.sub(this.output)!;
+                }else if(this.isNum(this.output)){
+                    //判断金额是否为数字，排除'3.'这种情况
+                    window.alert("记账成功！"+this.isFloat(this.output)+this.notes);
+                }
         }
+    }
     }
 </script>
 
