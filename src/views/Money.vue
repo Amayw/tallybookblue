@@ -3,8 +3,7 @@
         <div class="money">
             <Category :category.sync="consumption.category"/>
             <Tags :tagsList="tagsList" :selectedTagId.sync="consumption.selectedTagId"/>
-            <NumberPad :money.sync="consumption.money" :notes.sync="consumption.notes"/>
-            {{consumption}}
+            <NumberPad :money.sync="consumption.money" :notes.sync="consumption.notes" @submit="saveConsumption"/>
         </div>
     </Layout>
 </template>
@@ -14,30 +13,35 @@
     import Category from '@/components/money/Category.vue';
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
-    import {Component} from 'vue-property-decorator';
+    import {Component, Watch} from 'vue-property-decorator';
 
     type Consumption = {
         category: string;
         selectedTagId: number;
         money: string;
         notes: string;
+        createAt?: Date;
     }
 
     @Component({
         components: {Category, Tags, NumberPad}
     })
     export default class Money extends Vue {
+        //每次记账的消费记录
         consumption: Consumption = {
             category: '1',
             selectedTagId: 1,
             money: '0',
-            notes: '',
+            notes: ''
         };
-        tagsList = [{id: 1, icon: 'icon-daily1', name: '日用'},
+        allConsumptions: Consumption[]=JSON.parse(window.localStorage.getItem('consumption')!)||[];
+        //标签数据
+        tagsList = [
+            {id: 1, icon: 'icon-food4', name: '餐饮'},
             {id: 2, icon: 'icon-book2', name: '书籍'},
             {id: 3, icon: 'icon-travel1', name: '旅游'},
             {id: 4, icon: 'icon-wine2', name: '烟酒'},
-            {id: 5, icon: 'icon-food4', name: '餐饮'},
+            {id: 5, icon: 'icon-daily1', name: '日用'},
             {id: 6, icon: 'icon-vegetable2', name: '蔬菜'},
             {id: 7, icon: 'icon-fruit4', name: '水果'},
             {id: 8, icon: 'icon-pet1', name: '宠物'},
@@ -59,6 +63,23 @@
             {id: 24, icon: 'icon-communication1', name: '通讯'},
             {id: 25, icon: 'icon-wage2', name: '工资'}
         ];
+
+        saveConsumption(){
+            const newConsumption: Consumption = JSON.parse(JSON.stringify(this.consumption));
+            newConsumption.createAt=new Date();
+            this.allConsumptions.push(newConsumption);
+        }
+
+        @Watch('allConsumptions')
+        onAllConsumptionsChange(){
+            window.localStorage.setItem('consumption',JSON.stringify(this.allConsumptions));
+            this.consumption={
+                category: '1',
+                selectedTagId: 1,
+                money: '0',
+                notes: ''
+            };
+        }
     }
 </script>
 

@@ -2,9 +2,9 @@
     <div class="numberWrapper">
         <div class="inputs">
             <!--<input class="left" placeholder="备注" v-model="notes"/>-->
-            <input class="left" placeholder="备注" :value="notes" @input="onNotesChange($event.target.value)"/>
+            <input label="notes" class="left" placeholder="备注" :value="notes" @input="onNotesChange($event.target.value)"/>
             <!--<input class="left" placeholder="备注" :value="notes" @input="$emit('update:notes',$event.target.value)"/>-->
-            <div class="right" placeholder="元">{{output}}元</div>
+            <div class="right">{{output}}元</div>
         </div>
         <div class="buttons" @click="sumMoney">
             <button>1</button>
@@ -29,7 +29,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import {Component, Prop, Watch} from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
 
     @Component
     export default class NumberPad extends Vue {
@@ -58,7 +58,7 @@
         }
 
         isNum(str: string) {
-            if (this.output.indexOf('.') === this.output.length - 1) {
+            if (str.indexOf('.') === str.length - 1) {
                 window.alert('请检查输入金额，小数点不应在金额末尾！');
                 return false;
             } else {
@@ -173,8 +173,10 @@
                     this.output = this.sub(this.output)!;
                 } else if (this.isNum(this.output)) {
                     //判断金额是否为数字，排除'3.'这种情况
+                    window.alert('记账成功！' + this.notes +'  消费'+ this.isFloat(this.output)+'元');
                     this.$emit('update:money', this.output);
-                    window.alert('记账成功！' + this.notes + this.isFloat(this.output));
+                    this.$emit('submit',this.output);
+                    this.output=this.money;
                 }
             }
         }
@@ -188,11 +190,11 @@
         > .inputs {
             display: flex;
             justify-content: center;
-            margin: 4px 0 2px 0;
+            margin: 6px 0 2px 0;
 
             > input, div {
                 border: 1px solid #000;
-                padding: 10px;
+                padding: 8px;
                 outline: none;
                 background: #fefefe;
                 font-size: 8px;
