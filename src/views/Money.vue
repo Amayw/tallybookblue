@@ -14,27 +14,22 @@
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
+    import {model} from '@/model.ts'
+    import {ConsumptionItem} from '@/custom';
 
-    type Consumption = {
-        category: string;
-        selectedTagId: number;
-        money: string;
-        notes: string;
-        createAt?: Date;
-    }
 
     @Component({
         components: {Category, Tags, NumberPad}
     })
     export default class Money extends Vue {
         //每次记账的消费记录
-        consumption: Consumption = {
+        consumption: ConsumptionItem = {
             category: '1',
             selectedTagId: 1,
             money: '0',
             notes: ''
         };
-        allConsumptions: Consumption[]=JSON.parse(window.localStorage.getItem('consumption')!)||[];
+        allConsumptions=model.fetch();
         //标签数据
         tagsList = [
             {id: 1, icon: 'icon-food4', name: '餐饮'},
@@ -65,14 +60,15 @@
         ];
 
         saveConsumption(){
-            const newConsumption: Consumption = JSON.parse(JSON.stringify(this.consumption));
+            const newConsumption = model.clone(this.consumption);
             newConsumption.createAt=new Date();
             this.allConsumptions.push(newConsumption);
+            model.save(this.allConsumptions);
         }
 
         @Watch('allConsumptions')
         onAllConsumptionsChange(){
-            window.localStorage.setItem('consumption',JSON.stringify(this.allConsumptions));
+
             this.consumption={
                 category: '1',
                 selectedTagId: 1,
