@@ -2,7 +2,7 @@
     <ol class="tags">
         <li @click="changeSelectedTag(tag.id)" v-for="tag in tagsList" :class="tag.id===selectedTagId?'active':''" :key="tag.id">
             <Icon :name="tag.icon"/>
-            <span>{{tag.name}}</span>
+            <span >{{tag.name}}</span>
         </li>
     </ol>
 </template>
@@ -42,8 +42,8 @@
             margin: 10px;
             max-height: 100px;
             > .icon {
-                width: 60px;
-                height: 40px;
+                width: 46px;
+                height: 46px;
             }
 
             > span {
