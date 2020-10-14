@@ -1,7 +1,7 @@
 <template>
     <div class="numberWrapper">
         <div class="inputs">
-            <!--<input class="left" placeholder="备注" v-model="notes"/>-->
+            <!--<input class="left" placeholder="备注" v-consumptionModel="notes"/>-->
             <input label="notes" class="left" placeholder="备注" :value="notes" @input="onNotesChange($event.target.value)"/>
             <!--<input class="left" placeholder="备注" :value="notes" @input="$emit('update:notes',$event.target.value)"/>-->
             <div class="right">{{output}}元</div>
