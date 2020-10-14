@@ -1,4 +1,4 @@
-type labelItem = {
+type ConsumptionItem = {
     category: string;
     selectedTagId: number;
     money: string;
@@ -11,4 +11,4 @@ type labelItem={
     icon: string;
     name: string;
 }
-export {labelItem,labelItem};
+export {consumptionItem,labelItem};

@@ -15,8 +15,8 @@
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
     import {consumptionModel} from '@/models/consumptionModel'
-    import {labelItem} from '@/custom';
     import {labelModel} from '@/models/LabelModel';
+    import {consumptionItem} from '@/custom';
 
 
     @Component({
@@ -24,7 +24,7 @@
     })
     export default class Money extends Vue {
         //每次记账的消费记录
-        consumption: labelItem = {
+        consumption: consumptionItem = {
             category: '1',
             selectedTagId: 1,
             money: '0',

@@ -28,11 +28,15 @@ const labelList = [
 ];
 const localStorageName='label';
 const labelModel={
+    data:(JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList),
     fetch(){
-        return (JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList) as labelItem[];
-
+        return this.data;
     },
-    save(data: labelItem[]){
+    add(data: labelItem){
+        this.data.push(data);
+        this.save(this.data);
+    },
+    save(data: labelItem){
         window.localStorage.setItem(localStorageName,JSON.stringify(data));
     },
     clone(data: labelItem){

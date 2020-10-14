@@ -3,7 +3,9 @@
     <header>
         <Icon name="" />
         标签管理
-        <Icon name="icon-jia" />
+        <div @click="addLabel">
+            <Icon name="icon-jia" />
+        </div>
     </header>
     <ol class="labels">
         <li v-for="tag in tagsList" :key="tag.id">
@@ -23,10 +25,23 @@
     import Vue from "vue";
     import {Component} from 'vue-property-decorator';
     import {labelModel} from '@/models/LabelModel';
+    import {labelItem} from '@/custom';
 
     @Component
     export default class Labels extends Vue{
         tagsList=labelModel.fetch();
+        label: labelItem={
+            id:100,
+            name:'',
+            icon:'icon-food4'
+        }
+        addLabel(){
+            const name=window.prompt('请输入新标签名');
+            if(name!==null){
+                this.label.name=name;
+            }
+            labelModel.add(this.label);
+        }
     }
 </script>
 
