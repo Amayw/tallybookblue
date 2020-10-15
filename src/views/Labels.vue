@@ -25,22 +25,28 @@
     import Vue from "vue";
     import {Component} from 'vue-property-decorator';
     import {labelModel} from '@/models/LabelModel';
-    import {labelItem} from '@/custom';
+    import {LabelItem} from '@/custom';
+
+    labelModel.fetch()
 
     @Component
     export default class Labels extends Vue{
-        tagsList=labelModel.fetch();
-        label: labelItem={
+        tagsList=labelModel.data;
+        label: LabelItem={
             id:100,
             name:'',
             icon:'icon-food4'
         }
+
         addLabel(){
             const name=window.prompt('请输入新标签名');
             if(name!==null){
                 this.label.name=name;
             }
-            labelModel.add(this.label);
+            const res=labelModel.add(this.label);
+            if(res==='duplicated'){
+                window.alert('标签名重复！');
+            }
         }
     }
 </script>

@@ -1,4 +1,4 @@
-import {labelItem} from '@/custom';
+import {LabelItem} from '@/custom';
 const labelList = [
     {id: 1, icon: 'icon-food4', name: '餐饮'},
     {id: 2, icon: 'icon-book2', name: '书籍'},
@@ -28,19 +28,24 @@ const labelList = [
 ];
 const localStorageName='label';
 const labelModel={
-    data:(JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList),
+    data:JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList,
     fetch(){
         return this.data;
     },
-    add(data: labelItem){
+    add(data: LabelItem){
+        const names=this.data.map((item: LabelItem)=>{return item.name;});
+        if(names.indexOf(name)>=0){
+            return 'duplicated';
+        }
         this.data.push(data);
-        this.save(this.data);
+        this.save();
+        return 'success';
     },
-    save(data: labelItem){
-        window.localStorage.setItem(localStorageName,JSON.stringify(data));
+    save(){
+        window.localStorage.setItem(localStorageName,JSON.stringify(this.data));
     },
-    clone(data: labelItem){
-        return JSON.parse(JSON.stringify(data)) as labelItem;
+    clone(data: LabelItem){
+        return JSON.parse(JSON.stringify(data)) as LabelItem;
     }
 }
 

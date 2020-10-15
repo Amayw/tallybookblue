@@ -1,15 +1,15 @@
-import {consumptionItem} from '@/custom';
+import {ConsumptionItem} from '@/custom';
 
 const localStorageName='consumption';
 const consumptionModel={
     fetch(){
-        return JSON.parse(window.localStorage.getItem(localStorageName)||'[]') as consumptionItem[];
+        return JSON.parse(window.localStorage.getItem(localStorageName)||'[]') as ConsumptionItem[];
     },
-    save(data: consumptionItem[]){
+    save(data: ConsumptionItem[]){
         window.localStorage.setItem(localStorageName,JSON.stringify(data));
     },
-    clone(data: consumptionItem){
-        return JSON.parse(JSON.stringify(data)) as consumptionItem;
+    clone(data: ConsumptionItem){
+        return JSON.parse(JSON.stringify(data)) as ConsumptionItem;
     }
 }
 

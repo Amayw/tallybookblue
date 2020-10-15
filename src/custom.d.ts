@@ -6,9 +6,9 @@ type ConsumptionItem = {
     createAt?: Date;
 }
 
-type labelItem={
+type LabelItem={
     id: number;
     icon: string;
     name: string;
 }
-export {consumptionItem,labelItem};
+export {ConsumptionItem,LabelItem};
