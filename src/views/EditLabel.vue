@@ -9,8 +9,8 @@
             <div class="right">保存</div>
         </header>
         <div class="edit">
-            <Icon :name="iconList[selectedId-1].icon"/>
-            <input placeholder="标签名称"/>
+            <Icon :name="tag.icon"/>
+            <input placeholder="标签名称" :value="tag.name"/>
         </div>
         <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"/>
     </div>
@@ -20,6 +20,8 @@
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
     import Tags from '@/components/money/Tags.vue';
+    import {labelModel} from '@/models/LabelModel';
+    import {LabelItem} from '@/custom';
     @Component({
         components: {Tags}
     })
@@ -65,7 +67,20 @@
             {id: 39, icon: 'icon-clothes5'},
             {id: 40, icon: 'icon-digital2'}
         ]
-        selectedId=1;
+        tag: LabelItem={
+            id:5,
+            icon:'icon-food2',
+            name:''
+        };
+        created(){
+            const id: string=this.$route.params.id;
+            this.tag=labelModel.find(id);
+            if(this.tag){
+                console.log(this.tag);
+            }else{
+                this.$router.replace('/404');
+            }
+        }
     }
 </script>
 

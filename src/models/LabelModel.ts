@@ -33,7 +33,8 @@ const labelModel={
         return this.data;
     },
     add(data: LabelItem){
-        const names=this.data.map((item: LabelItem)=>{return item.name;});
+        // const names=this.data.map((item: LabelItem)=>{return item.name;});
+        const names=this.getAttributeArray(name);
         if(names.indexOf(name)>=0){
             return 'duplicated';
         }
@@ -46,6 +47,14 @@ const labelModel={
     },
     clone(data: LabelItem){
         return JSON.parse(JSON.stringify(data)) as LabelItem;
+    },
+    find(id: string){
+        return this.data.filter((item: LabelItem)=>String(item.id)===id)[0];
+    },
+    getAttributeArray(attribute: string){
+        if(attribute==="id"||attribute==="name"){
+            return this.data.map((item: LabelItem)=>{return item[attribute];});
+        }
     }
 }
 
