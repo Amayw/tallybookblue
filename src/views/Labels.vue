@@ -33,15 +33,19 @@
     export default class Labels extends Vue{
         tagsList=labelModel.data;
         label: LabelItem={
-            id:100,
+            id:101,
             name:'',
             icon:'icon-food4'
         }
 
         addLabel(){
             const name=window.prompt('请输入新标签名');
-            if(name!==null){
-                this.label.name=name;
+            console.log(name);
+            if(!name){
+                window.alert('标签名不能为空！')
+                return;
+            }else{
+                this.label.name=name!;
             }
             const res=labelModel.add(this.label);
             if(res==='duplicated'){

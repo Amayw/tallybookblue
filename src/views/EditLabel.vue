@@ -1,18 +1,18 @@
 <template>
     <div class="wrapper">
         <header>
-            <div class="left">
+            <div class="left" @click="back">
 <!--                <Icon name="icon-jia"/>-->
                 <span>返回</span>
             </div>
             <div class="center">编辑标签</div>
-            <div class="right">保存</div>
+            <div class="right" @click="updateLabel">保存</div>
         </header>
         <div class="edit">
-            <Icon :name="tag.icon"/>
-            <input placeholder="标签名称" :value="tag.name"/>
+            <Icon :name="iconList[selectedId-1].icon"/>
+            <input placeholder="标签名称" :value="tag.name" @input="newName=$event.target.value"/>
         </div>
-        <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"/>
+        <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"  />
     </div>
 </template>
 
@@ -67,8 +67,10 @@
             {id: 39, icon: 'icon-clothes5'},
             {id: 40, icon: 'icon-digital2'}
         ]
+        selectedId=1;
+        newName='';
         tag: LabelItem={
-            id:5,
+            id:200,
             icon:'icon-food2',
             name:''
         };
@@ -76,9 +78,25 @@
             const id: string=this.$route.params.id;
             this.tag=labelModel.find(id);
             if(this.tag){
-                console.log(this.tag);
+                this.selectedId=this.iconList.filter(item=>item.icon===this.tag.icon)[0].id;
             }else{
                 this.$router.replace('/404');
+            }
+        }
+        back(){
+            this.$router.replace('/labels');
+        }
+
+
+        updateLabel(){
+            if(this.newName===''){
+                this.newName=this.tag.name;
+            }
+            const res=labelModel.update(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
+            if(res==='success'){
+                this.back();
+            }else if(res==='nolabel'){
+                window.alert('标签不存在！');
             }
         }
     }
@@ -105,7 +123,7 @@
         }
 
         >.edit{
-            margin: 10px;
+            margin: 20px;
             display: flex;
             >.icon{
                 width: 36px;

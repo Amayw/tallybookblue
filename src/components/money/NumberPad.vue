@@ -34,7 +34,7 @@
     @Component
     export default class NumberPad extends Vue {
         @Prop(String) money!: string;
-        @Prop(String) notes!: string;
+        @Prop(String) readonly notes!: string;
         output = this.money!;
 
         onNotesChange(newNotes: string) {

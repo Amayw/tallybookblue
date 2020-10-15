@@ -33,11 +33,6 @@ const labelModel={
         return this.data;
     },
     add(data: LabelItem){
-        // const names=this.data.map((item: LabelItem)=>{return item.name;});
-        const names=this.getAttributeArray(name);
-        if(names.indexOf(name)>=0){
-            return 'duplicated';
-        }
         this.data.push(data);
         this.save();
         return 'success';
@@ -51,10 +46,13 @@ const labelModel={
     find(id: string){
         return this.data.filter((item: LabelItem)=>String(item.id)===id)[0];
     },
-    getAttributeArray(attribute: string){
-        if(attribute==="id"||attribute==="name"){
-            return this.data.map((item: LabelItem)=>{return item[attribute];});
-        }
+    update(id: number,name: string,icon: string){
+        const label=this.find(String(id));
+        if(label===undefined) return "nolabel";
+        label.name=name;
+        label.icon=icon;
+        this.save();
+        return 'success';
     }
 }
 
