@@ -7,8 +7,8 @@
             <Icon name="icon-jia" />
         </div>
     </header>
-    <ol class="labels">
-        <li v-for="tag in tagsList" :key="tag.id">
+    <div class="labels">
+        <router-link class="item" :to="`labels/edit/${tag.id}`" v-for="tag in tagsList" :key="tag.id">
             <div class="left">
                 <Icon :name="tag.icon"/>
             </div>
@@ -16,8 +16,8 @@
                 <span>{{tag.name}}</span>
                 <Icon class="more" name="icon-gengduo1"/>
             </div>
-        </li>
-    </ol>
+        </router-link>
+    </div>
 </Layout>
 </template>
 
@@ -69,7 +69,7 @@
         height: 86vh;
         display: flex;
         flex-direction: column;
-        >li{
+        >.item{
             margin: 10px 10px 10px 2px;
             display: flex;
             .left{
