@@ -26,6 +26,7 @@
     import {Component} from 'vue-property-decorator';
     import {labelModel} from '@/models/LabelModel';
     import {LabelItem} from '@/custom';
+    import {createId} from '@/lib/idCreator.ts'
 
     labelModel.fetch()
 
@@ -33,7 +34,7 @@
     export default class Labels extends Vue{
         tagsList=labelModel.data;
         label: LabelItem={
-            id:101,
+            id:10000,
             name:'',
             icon:'icon-food4'
         }
@@ -46,8 +47,10 @@
                 return;
             }else{
                 this.label.name=name!;
+                this.label.id=createId();
             }
-            const res=labelModel.add(this.label);
+            const newLabel=labelModel.clone(this.label);
+            const res=labelModel.add(newLabel);
             if(res==='duplicated'){
                 window.alert('标签名重复！');
             }
