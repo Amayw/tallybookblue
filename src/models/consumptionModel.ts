@@ -2,8 +2,15 @@ import {ConsumptionItem} from '@/custom';
 
 const localStorageName='consumption';
 const consumptionModel={
+    data:JSON.parse(window.localStorage.getItem(localStorageName)||'[]') as ConsumptionItem[],
     fetch(){
-        return JSON.parse(window.localStorage.getItem(localStorageName)||'[]') as ConsumptionItem[];
+        return this.data;
+    },
+    add(data: ConsumptionItem){
+        const newConsumption = this.clone(data);
+        newConsumption.createAt=new Date();
+        this.data.push(newConsumption);
+        consumptionModel.save(this.data);
     },
     save(data: ConsumptionItem[]){
         window.localStorage.setItem(localStorageName,JSON.stringify(data));

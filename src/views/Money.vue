@@ -3,7 +3,7 @@
         <div class="money">
             <Category :category.sync="consumption.category"/>
             <Tags :tagsList="tagsList" :selectedTagId.sync="consumption.selectedTagId"/>
-            <NumberPad :money.sync="consumption.money" :notes.sync="consumption.notes" @submit="saveConsumption"/>
+            <NumberPad :money.sync="consumption.money" :notes.sync="consumption.notes" @submit="addConsumption"/>
         </div>
     </Layout>
 </template>
@@ -34,11 +34,12 @@
         //标签数据
         tagsList = labelModel.fetch();
 
-        saveConsumption(){
-            const newConsumption = consumptionModel.clone(this.consumption);
-            newConsumption.createAt=new Date();
-            this.allConsumptions.push(newConsumption);
-            consumptionModel.save(this.allConsumptions);
+        addConsumption(){
+            // const newConsumption = consumptionModel.clone(this.consumption);
+            // newConsumption.createAt=new Date();
+            // this.allConsumptions.push(newConsumption);
+            // consumptionModel.save(this.allConsumptions);
+            consumptionModel.add(this.consumption);
         }
 
         @Watch('allConsumptions')
