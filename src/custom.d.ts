@@ -15,4 +15,9 @@ type LabelItem={
 interface Window {
     consumptionList: ConsumptionItem[];
     addConsumption: (consumption: ConsumptionItem) => string;
+    tagsList: LabelItem[];
+    addLabel: (label: LabelItem) => string;
+    findLabel: (id: string) => LabelItem;
+    updateLabel: (id: number,name: string,icon: string) => 'success'|'nolabel';
 }
+

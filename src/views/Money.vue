@@ -30,7 +30,7 @@
         };
         consumptionList=window.consumptionList;
         //标签数据
-        tagsList = labelModel.fetch();
+        tagsList = window.tagsList;
 
         addConsumption(){
             console.log(window.addConsumption(this.consumption));

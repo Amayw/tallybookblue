@@ -24,24 +24,19 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component} from 'vue-property-decorator';
-    import {labelModel} from '@/models/LabelModel';
-    import {LabelItem} from '@/custom';
     import {createId} from '@/lib/idCreator.ts'
-
-    labelModel.fetch()
 
     @Component
     export default class Labels extends Vue{
-        tagsList=labelModel.data;
+        tagsList=window.tagsList;
         label: LabelItem={
             id:10000,
             name:'',
-            icon:'icon-food4'
+            icon:'icon-fruit8'
         }
 
         addLabel(){
             const name=window.prompt('请输入新标签名');
-            console.log(name);
             if(!name){
                 window.alert('标签名不能为空！')
                 return;
@@ -49,10 +44,8 @@
                 this.label.name=name!;
                 this.label.id=createId();
             }
-            const newLabel=labelModel.clone(this.label);
-            const res=labelModel.add(newLabel);
-            if(res==='duplicated'){
-                window.alert('标签名重复！');
+            if(window.addLabel(this.label)==='success'){
+                window.alert('创建标签成功！');
             }
         }
     }

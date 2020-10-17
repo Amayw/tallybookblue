@@ -21,7 +21,6 @@
     import {Component} from 'vue-property-decorator';
     import Tags from '@/components/money/Tags.vue';
     import {labelModel} from '@/models/LabelModel';
-    import {LabelItem} from '@/custom';
     @Component({
         components: {Tags}
     })
@@ -111,12 +110,12 @@
         newName='';
         tag: LabelItem={
             id:200,
-            icon:'icon-food2',
+            icon:'icon-fruit8',
             name:''
         };
         created(){
             const id: string=this.$route.params.id;
-            this.tag=labelModel.find(id);
+            this.tag=window.findLabel(id);
             if(this.tag){
                 this.selectedId=this.iconList.filter(item=>item.icon===this.tag.icon)[0].id;
             }else{
@@ -132,7 +131,7 @@
             if(this.newName===''){
                 this.newName=this.tag.name;
             }
-            const res=labelModel.update(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
+            const res=window.updateLabel(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
             if(res==='success'){
                 this.back();
             }else if(res==='nolabel'){

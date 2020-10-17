@@ -1,4 +1,3 @@
-import {LabelItem} from '@/custom';
 const labelList = [
     {id: 1, icon: 'icon-food4', name: '餐饮'},
     {id: 2, icon: 'icon-book2', name: '书籍'},
