@@ -11,4 +11,8 @@ type LabelItem={
     icon: string;
     name: string;
 }
-export {ConsumptionItem,LabelItem};
+
+interface Window {
+    consumptionList: ConsumptionItem[];
+    addConsumption: (consumption: ConsumptionItem) => string;
+}

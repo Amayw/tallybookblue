@@ -1,5 +1,3 @@
-import {ConsumptionItem} from '@/custom';
-
 const localStorageName='consumption';
 const consumptionModel={
     data:JSON.parse(window.localStorage.getItem(localStorageName)||'[]') as ConsumptionItem[],
@@ -11,6 +9,7 @@ const consumptionModel={
         newConsumption.createAt=new Date();
         this.data.push(newConsumption);
         consumptionModel.save(this.data);
+        return 'success';
     },
     save(data: ConsumptionItem[]){
         window.localStorage.setItem(localStorageName,JSON.stringify(data));

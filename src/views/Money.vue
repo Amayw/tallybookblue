@@ -14,9 +14,7 @@
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import {consumptionModel} from '@/models/consumptionModel'
     import {labelModel} from '@/models/LabelModel';
-    import {ConsumptionItem} from '@/custom';
 
 
     @Component({
@@ -30,21 +28,19 @@
             money: '0',
             notes: ''
         };
-        allConsumptions=consumptionModel.fetch();
+        consumptionList=window.consumptionList;
         //标签数据
         tagsList = labelModel.fetch();
 
         addConsumption(){
-            // const newConsumption = consumptionModel.clone(this.consumption);
-            // newConsumption.createAt=new Date();
-            // this.allConsumptions.push(newConsumption);
-            // consumptionModel.save(this.allConsumptions);
-            consumptionModel.add(this.consumption);
+            console.log(window.addConsumption(this.consumption));
+            if(window.addConsumption(this.consumption)==='success'){
+                window.alert('记账成功！' + this.consumption.notes +' '+ this.consumption.money+'元');
+            }
         }
 
-        @Watch('allConsumptions')
-        onAllConsumptionsChange(){
-
+        @Watch('consumptionList')
+        onConsumptionListChange(){
             this.consumption={
                 category: '1',
                 selectedTagId: 1,

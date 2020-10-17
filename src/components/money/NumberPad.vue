@@ -173,9 +173,8 @@
                     this.output = this.sub(this.output)!;
                 } else if (this.isNum(this.output)) {
                     //判断金额是否为数字，排除'3.'这种情况
-                    window.alert('记账成功！' + this.notes +' '+ this.isFloat(this.output)+'元');
-                    this.$emit('update:money', this.output);
-                    this.$emit('submit',this.output);
+                    this.$emit('update:money', this.isFloat(this.output));
+                    this.$emit('submit',this.isFloat(this.output));
                     this.output=this.money;
                 }
             }
