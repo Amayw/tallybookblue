@@ -1,93 +1,108 @@
 <template>
-<Layout>
-    <header>
-        <Icon name="" />
-        标签管理
-        <div @click="addLabel">
-            <Icon name="icon-jia" />
+    <Layout>
+        <header>
+            <Icon name=""/>
+            标签管理
+            <div @click="addLabel">
+                <Icon name="icon-jia"/>
+            </div>
+        </header>
+        <div class="labels">
+            <router-link class="item" :to="`labels/edit/${tag.id}`" v-for="tag in tagsList" :key="tag.id">
+                <div class="left">
+                    <Icon :name="tag.icon"/>
+                </div>
+                <div class="right">
+                    <span>{{tag.name}}</span>
+                    <Icon class="more" name="icon-gengduo1"/>
+                </div>
+            </router-link>
         </div>
-    </header>
-    <div class="labels">
-        <router-link class="item" :to="`labels/edit/${tag.id}`" v-for="tag in tagsList" :key="tag.id">
-            <div class="left">
-                <Icon :name="tag.icon"/>
-            </div>
-            <div class="right">
-                <span>{{tag.name}}</span>
-                <Icon class="more" name="icon-gengduo1"/>
-            </div>
-        </router-link>
-    </div>
-</Layout>
+    </Layout>
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import {createId} from '@/lib/idCreator.ts'
-    import {store} from '@/store/index2';
+    import {createId} from '@/lib/idCreator.ts';
 
-    @Component
-    export default class Labels extends Vue{
-        tagsList=store.tagsList;
-        label: LabelItem={
-            id:10000,
-            name:'',
-            icon:'icon-fruit8'
+    @Component({})
+    export default class Labels extends Vue {
+        get tagsList() {
+            return this.$store.state.tagsList;
         }
 
-        addLabel(){
-            const name=window.prompt('请输入新标签名');
-            if(!name){
-                window.alert('标签名不能为空！')
+        label: LabelItem = {
+            id: 10000,
+            icon: 'icon-fruit8',
+            name: '',
+        };
+
+        created() {
+            this.$store.commit('fetchLabel');
+        }
+
+        addLabel() {
+            const name = window.prompt('请输入新标签名');
+            if (!name) {
+                window.alert('标签名不能为空！');
                 return;
-            }else{
-                this.label.name=name!;
-                this.label.id=createId();
+            } else {
+                this.label.name = name!;
+                this.label.id = createId();
             }
-            if(store.addLabel(this.label)==='success'){
-                window.alert('创建标签成功！');
-            }
+            this.$store.commit('addLabel', this.label);
+            //TODO
+            // if(res==='success'){
+            window.alert('创建标签成功！');
+            // }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    header{
+    header {
         height: 6vh;
         color: #4e4e4e;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .icon{
+
+        .icon {
             color: #131313;
             margin-right: 10px;
         }
     }
-    .labels{
+
+    .labels {
         background: #fefefe;
         overflow: auto;
         height: 86vh;
         display: flex;
         flex-direction: column;
-        >.item{
+
+        > .item {
             margin: 10px 10px 10px 2px;
             display: flex;
-            .left{
+
+            .left {
                 width: 16vw;
                 display: flex;
                 justify-content: space-around;
-                .icon{
+
+                .icon {
                     width: 40px;
                     height: 40px;
                 }
             }
-            .right{
+
+            .right {
                 flex-grow: 1;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                >.more{
+
+                > .more {
                     color: #9e9e9e;
                 }
             }

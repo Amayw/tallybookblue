@@ -14,13 +14,20 @@
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import { store } from '@/store/index2';
 
 
     @Component({
         components: {Category, Tags, NumberPad}
     })
     export default class Money extends Vue {
+        get consumptionList() {
+            return this.$store.state.consumptionList;
+        }
+
+        get tagsList() {
+            return this.$store.state.tagsList;
+        }
+
         //每次记账的消费记录
         consumption: ConsumptionItem = {
             category: '1',
@@ -28,19 +35,25 @@
             money: '0',
             notes: ''
         };
-        consumptionList=store.consumptionList;
-        //标签数据
-        tagsList = store.tagsList;
 
-        addConsumption(){
-            if(store.addConsumption(this.consumption)==='success'){
-                window.alert('记账成功！' + this.consumption.notes +' '+ this.consumption.money+'元');
-            }
+        created() {
+            this.$store.commit('fetchConsumption');
+            //标签数据
+            this.$store.commit('fetchLabel');
+        }
+
+
+        addConsumption() {
+            this.$store.commit('addConsumption', this.consumption);
+            //TODO
+            // if(res==='success'){
+            window.alert('记账成功！' + this.consumption.notes + ' ' + this.consumption.money + '元');
+            // }
         }
 
         @Watch('consumptionList')
-        onConsumptionListChange(){
-            this.consumption={
+        onConsumptionListChange() {
+            this.consumption = {
                 category: '1',
                 selectedTagId: 1,
                 money: '0',

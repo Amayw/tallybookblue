@@ -5,17 +5,11 @@ import router from './router';
 import store from './store';
 import Layout from '@/components/Layout.vue';
 import Icon from '@/components/Icon.vue';
-import {consumptionModel} from '@/models/consumptionModel';
-import {labelModel} from '@/models/LabelModel';
 
 Vue.config.productionTip = false;
 
 Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
-
-
-
-
 
 
 new Vue({

@@ -2,17 +2,17 @@
     <div class="wrapper">
         <header>
             <div class="left" @click="back">
-<!--                <Icon name="icon-jia"/>-->
+                <!--                <Icon name="icon-jia"/>-->
                 <span>返回</span>
             </div>
             <div class="center">编辑标签</div>
-            <div class="right" @click="updateLabel">保存</div>
+            <div class="right" @click="update">保存</div>
         </header>
         <div class="edit">
             <Icon :name="iconList[selectedId-1].icon"/>
-            <input placeholder="标签名称" :value="tag.name" @input="newName=$event.target.value"/>
+            <input placeholder="标签名称" :value="newName" @input="newName=$event.target.value"/>
         </div>
-        <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"  />
+        <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"/>
     </div>
 </template>
 
@@ -20,11 +20,15 @@
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
     import Tags from '@/components/money/Tags.vue';
-    import {store} from '@/store/index2';
+
     @Component({
         components: {Tags}
     })
     export default class EditLabel extends Vue {
+        get currentTag() {
+            return this.$store.state.currentTag;
+        }
+
         iconList = [{id: 1, icon: 'icon-flower'},
             {id: 2, icon: 'icon-high-heels'},
             {id: 3, icon: 'icon-wanju'},
@@ -105,78 +109,92 @@
             {id: 78, icon: 'icon-traffic6'},
             {id: 79, icon: 'icon-fun6'},
             {id: 80, icon: 'icon-wage2'}
-        ]
-        selectedId=1;
-        newName='';
-        tag: LabelItem={
-            id:200,
-            icon:'icon-fruit8',
-            name:''
-        };
-        created(){
-            const id: string=this.$route.params.id;
-            this.tag=store.findLabel(id);
-            if(this.tag){
-                this.selectedId=this.iconList.filter(item=>item.icon===this.tag.icon)[0].id;
-            }else{
+        ];
+        selectedId = 1;
+        newName = '';
+        id=200;
+        // tag: LabelItem = {
+        //     id: 200,
+        //     icon: 'icon-fruit8',
+        //     name: ''
+        // };
+
+        created() {
+            const id: string = this.$route.params.id;
+            this.$store.commit('setCurrentTag', id);
+            if (this.currentTag) {
+                this.selectedId = this.iconList.filter(item => item.icon === this.currentTag.icon)[0].id;
+                this.newName=this.currentTag.name;
+                this.id=this.currentTag.id;
+            } else {
                 this.$router.replace('/404');
             }
         }
-        back(){
+
+        back() {
             this.$router.replace('/labels');
         }
 
 
-        updateLabel(){
-            if(this.newName===''){
-                this.newName=this.tag.name;
+        update() {
+            if (this.newName === '') {
+                this.newName = this.currentTag.name;
             }
-            const res=store.updateLabel(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
-            if(res==='success'){
+            this.$store.commit('updateLabel', {
+                id: this.id,
+                name: this.newName,
+                icon: this.iconList[this.selectedId - 1].icon
+            });
+            // if(res==='success'){
                 this.back();
-            }else if(res==='nolabel'){
-                window.alert('标签不存在！');
-            }
+            // }else if(res==='nolabel'){
+            //     window.alert('标签不存在！');
+            // }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .wrapper{
+    .wrapper {
         display: flex;
         flex-direction: column;
         height: 100vh;
-        >header{
+
+        > header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 10px;
             height: 8vh;
-            .left{
-                color:#ababab;
+
+            .left {
+                color: #ababab;
             }
-            .center{
+
+            .center {
                 color: #4e4e4e;
             }
 
         }
 
-        >.edit{
+        > .edit {
             margin: 20px;
             display: flex;
-            >.icon{
+
+            > .icon {
                 width: 36px;
                 height: 36px;
                 margin-right: 10px;
             }
-            >input{
+
+            > input {
                 width: 90vw;
                 outline: none;
                 border: none;
             }
         }
 
-        >.icons{
+        > .icons {
             flex-grow: 1;
             background: #f9f9f6;
         }
