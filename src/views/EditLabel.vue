@@ -20,7 +20,7 @@
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
     import Tags from '@/components/money/Tags.vue';
-    import {labelModel} from '@/models/LabelModel';
+    import {store} from '@/store/index2';
     @Component({
         components: {Tags}
     })
@@ -115,7 +115,7 @@
         };
         created(){
             const id: string=this.$route.params.id;
-            this.tag=window.findLabel(id);
+            this.tag=store.findLabel(id);
             if(this.tag){
                 this.selectedId=this.iconList.filter(item=>item.icon===this.tag.icon)[0].id;
             }else{
@@ -131,7 +131,7 @@
             if(this.newName===''){
                 this.newName=this.tag.name;
             }
-            const res=window.updateLabel(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
+            const res=store.updateLabel(this.tag.id,this.newName,this.iconList[this.selectedId-1].icon);
             if(res==='success'){
                 this.back();
             }else if(res==='nolabel'){
@@ -150,7 +150,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 0 10px;
+            margin: 10px;
             height: 8vh;
             .left{
                 color:#ababab;

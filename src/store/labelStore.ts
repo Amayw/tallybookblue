@@ -21,33 +21,37 @@ const labelList = [
     {id: 20, icon: 'icon-digital2', name: '数码'}
 ];
 const localStorageName='label';
-const labelModel={
-    data:JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList,
-    fetch(){
-        return this.data;
+
+const labelStore={
+    tagsList : [] as LabelItem[],
+    fetchLabel(){
+        this.tagsList=JSON.parse(window.localStorage.getItem(localStorageName)!)||labelList!;
+        return this.tagsList;
     },
-    add(data: LabelItem){
-        this.data.push(data);
-        this.save();
+    addLabel(label: LabelItem){
+        const newLabel = this.cloneLabel(label);
+        this.tagsList?.push(newLabel);
+        this.saveLabel();
         return 'success';
     },
-    save(){
-        window.localStorage.setItem(localStorageName,JSON.stringify(this.data));
+    findLabel(id: string){
+        return this.tagsList?.filter((item: LabelItem)=>String(item.id)===id)[0];
     },
-    clone(data: LabelItem){
-        return JSON.parse(JSON.stringify(data)) as LabelItem;
-    },
-    find(id: string){
-        return this.data.filter((item: LabelItem)=>String(item.id)===id)[0];
-    },
-    update(id: number,name: string,icon: string){
-        const label=this.find(String(id));
+    updateLabel(id: number, name: string, icon: string){
+        const label=this.findLabel(String(id));
         if(label===undefined) return "nolabel";
         label.name=name;
         label.icon=icon;
-        this.save();
+        this.saveLabel();
         return 'success';
+    },
+    saveLabel(){
+        window.localStorage.setItem(localStorageName,JSON.stringify(this.tagsList));
+    },
+    cloneLabel:(data: LabelItem)=>{
+        return JSON.parse(JSON.stringify(data)) as LabelItem;
     }
 }
 
-export {labelModel};
+labelStore.fetchLabel();
+export {labelStore}

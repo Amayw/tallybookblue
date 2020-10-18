@@ -25,10 +25,11 @@
     import Vue from "vue";
     import {Component} from 'vue-property-decorator';
     import {createId} from '@/lib/idCreator.ts'
+    import {store} from '@/store/index2';
 
     @Component
     export default class Labels extends Vue{
-        tagsList=window.tagsList;
+        tagsList=store.tagsList;
         label: LabelItem={
             id:10000,
             name:'',
@@ -44,7 +45,7 @@
                 this.label.name=name!;
                 this.label.id=createId();
             }
-            if(window.addLabel(this.label)==='success'){
+            if(store.addLabel(this.label)==='success'){
                 window.alert('创建标签成功！');
             }
         }

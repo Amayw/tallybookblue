@@ -14,7 +14,7 @@
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import {labelModel} from '@/models/LabelModel';
+    import { store } from '@/store/index2';
 
 
     @Component({
@@ -28,13 +28,12 @@
             money: '0',
             notes: ''
         };
-        consumptionList=window.consumptionList;
+        consumptionList=store.consumptionList;
         //标签数据
-        tagsList = window.tagsList;
+        tagsList = store.tagsList;
 
         addConsumption(){
-            console.log(window.addConsumption(this.consumption));
-            if(window.addConsumption(this.consumption)==='success'){
+            if(store.addConsumption(this.consumption)==='success'){
                 window.alert('记账成功！' + this.consumption.notes +' '+ this.consumption.money+'元');
             }
         }
