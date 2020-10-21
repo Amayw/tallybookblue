@@ -45,17 +45,13 @@
         addLabel() {
             const name = window.prompt('请输入新标签名');
             if (!name) {
-                window.alert('标签名不能为空！');
                 return;
             } else {
                 this.label.name = name!;
                 this.label.id = createId();
             }
             this.$store.commit('addLabel', this.label);
-            //TODO
-            // if(res==='success'){
             window.alert('创建标签成功！');
-            // }
         }
     }
 </script>
