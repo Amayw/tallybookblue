@@ -4,6 +4,7 @@ import {clone} from '@/lib/clone';
 
 Vue.use(Vuex);
 const labelList = [
+    {id: 0, icon: 'icon-clothes5', name: '服饰'},
     {id: 1, icon: 'icon-food4', name: '餐饮'},
     {id: 2, icon: 'icon-book2', name: '书籍'},
     {id: 3, icon: 'icon-travel1', name: '旅游'},
@@ -22,8 +23,7 @@ const labelList = [
     {id: 16, icon: 'icon-car2', name: '汽车'},
     {id: 17, icon: 'icon-parent1', name: '长辈'},
     {id: 18, icon: 'icon-communication4', name: '通讯'},
-    {id: 19, icon: 'icon-clothes5', name: '服饰'},
-    {id: 20, icon: 'icon-digital2', name: '数码'}
+    {id: 19, icon: 'icon-digital2', name: '数码'}
 ];
 
 type RootState = {

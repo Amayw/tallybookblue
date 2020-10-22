@@ -14,11 +14,14 @@
             <ol v-else class="displayHash">
                 <li class="hashItem" v-for="(hash,index) in group" :key="index">
                     <ol class="displayRecord">
-                        <li class="recordTitle">{{beauty(hash.title)}}</li>
+                        <li class="recordTitle">
+                            <span>{{beauty(hash.title)}}</span>
+                            <span>￥{{hash.total}}</span>
+                        </li>
                         <li class="recordItems" :key="record.createAt" v-for="record in hash.items">
                             <div class="iconAddName">
-                                <Icon :name="tagsList[record.selectedTagId-1].icon"></Icon>
-                                {{tagsList[record.selectedTagId-1].name}}
+                                <Icon :name="tagsList[record.selectedTagId].icon"></Icon>
+                                {{tagsList[record.selectedTagId].name}}
                             </div>
                             <div class="money">￥{{record.money}}</div>
                         </li>
@@ -58,10 +61,9 @@
         get group() {
             const {consumptionList} = this;
             if(consumptionList.length===0) {return [];}
-            type HashTableValue={title: string; items: ConsumptionItem[]};
-            const hashTable: HashTableValue[]=[];
-            const newList=clone(consumptionList).sort((a: ConsumptionItem, b: ConsumptionItem)=>dayjs(b.createAt).valueOf()-dayjs(a.createAt).valueOf());
-            const finalArray=[{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items:[newList[0]]}]
+            type HashTable={title: string; total?: string; items: ConsumptionItem[]};
+            const newList=clone(consumptionList).filter((item: ConsumptionItem)=>item.category===this.category).sort((a: ConsumptionItem, b: ConsumptionItem)=>dayjs(b.createAt).valueOf()-dayjs(a.createAt).valueOf());
+            const finalArray: HashTable[]=[{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items:[newList[0]]}]
             for(let i=1;i<newList.length;i++){
                 const day=dayjs(newList[i].createAt).format('YYYY-MM-DD');
                 if(day===finalArray[finalArray.length-1].title){
@@ -71,6 +73,11 @@
                 }
 
             }
+            finalArray.map(item=>item.total=item.items.reduce((sum,item)=>{
+                console.log(sum);
+                console.log(item.money);
+                return sum+parseFloat(item.money);
+            },0.00).toFixed(2).toString())
             return finalArray;
         }
 
@@ -141,14 +148,14 @@
                         &.recordTitle {
                             padding-left: 14px;
                             color: #a4c9c1;
+                            padding-right: 10px;
+                            margin-right: 4px;
                         }
 
                         &.recordItems {
                             background: #f8f9f4;
                             padding: 10px;
                             margin: 4px;
-                            display: flex;
-                            justify-content: space-between;
                             border-radius: 6px;
 
                             > .iconAddName {

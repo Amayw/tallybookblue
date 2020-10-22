@@ -50,12 +50,8 @@
 
         @Watch('consumptionList')
         onConsumptionListChange() {
-            this.consumption = {
-                category: '1',
-                selectedTagId: 1,
-                money: '0',
-                notes: ''
-            };
+            this.consumption.money='0';
+            this.consumption.notes='';
         }
     }
 </script>
