@@ -3,7 +3,7 @@
         <header>
             <Icon name=""/>
             标签管理
-            <div @click="addLabel">
+            <div class="right" @click="addLabel">
                 <Icon name="icon-jia"/>
             </div>
         </header>
@@ -64,10 +64,17 @@
         justify-content: space-between;
         align-items: center;
 
-        .icon {
-            color: #131313;
-            margin-right: 10px;
+        .right{
+           >.icon {
+               /*border: 1px solid red;*/
+               background: #a5c9c0;
+               color: #fff;
+               margin-right: 10px;
+               border-radius: 50%;
+               padding: 4px;
+           }
         }
+
     }
 
     .labels {

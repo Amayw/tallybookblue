@@ -175,6 +175,10 @@
                 color: #4e4e4e;
             }
 
+            .right{
+                color: #a5c9c0;
+            }
+
         }
 
         > .edit {

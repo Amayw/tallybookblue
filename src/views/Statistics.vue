@@ -2,9 +2,9 @@
     <Layout>
         <div class="staContent">
             <Category :category.sync="category"/>
-            <Tabs :categoryTime.sync="categoryTime"/>
-            <div v-if="JSON.stringify(result)===JSON.stringify({})" class="noRecord">
-                <div>空空如也</div>
+<!--            <Tabs :displayMode.sync="displayMode"/>-->
+            <div v-if="JSON.stringify(group)===JSON.stringify([])" class="noRecord">
+                <div>空空如也~</div>
                 <div>
                     <span>快去</span>
                     <router-link class="addRecord" to="/money">记一笔</router-link>
@@ -12,9 +12,9 @@
                 </div>
             </div>
             <ol v-else class="displayHash">
-                <li class="hashItem" v-for="hash in result" :key="hash.date">
+                <li class="hashItem" v-for="(hash,index) in group" :key="index">
                     <ol class="displayRecord">
-                        <li class="recordTitle">{{hash.title}}</li>
+                        <li class="recordTitle">{{beauty(hash.title)}}</li>
                         <li class="recordItems" :key="record.createAt" v-for="record in hash.items">
                             <div class="iconAddName">
                                 <Icon :name="tagsList[record.selectedTagId-1].icon"></Icon>
@@ -34,6 +34,8 @@
     import {Component} from 'vue-property-decorator';
     import Category from '@/components/money/Category.vue';
     import Tabs from '@/components/Tabs.vue';
+    import dayjs from 'dayjs';
+    import {clone} from '@/lib/clone';
 
     @Component({
         components: {
@@ -43,7 +45,7 @@
     })
     export default class Statistics extends Vue {
         category = '1';
-        categoryTime = 'day';
+        displayMode = 'day';
 
         get consumptionList() {
             return this.$store.state.consumptionList;
@@ -53,22 +55,48 @@
             return this.$store.state.tagsList;
         }
 
-        get result() {
+        get group() {
             const {consumptionList} = this;
-            type HashTableValue = { title: string; items: ConsumptionItem[] };
-            const hashTable: { [key: string]: HashTableValue } = {};
-            for (let i = 0; i < consumptionList.length; i++) {
-                const [date, time] = consumptionList[i].createAt.split('T');
-                hashTable[date] = hashTable[date] || {title: date, items: []};
-                hashTable[date].items.push(consumptionList[i]);
+            if(consumptionList.length===0) {return [];}
+            type HashTableValue={title: string; items: ConsumptionItem[]};
+            const hashTable: HashTableValue[]=[];
+            const newList=clone(consumptionList).sort((a: ConsumptionItem, b: ConsumptionItem)=>dayjs(b.createAt).valueOf()-dayjs(a.createAt).valueOf());
+            const finalArray=[{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items:[newList[0]]}]
+            for(let i=1;i<newList.length;i++){
+                const day=dayjs(newList[i].createAt).format('YYYY-MM-DD');
+                if(day===finalArray[finalArray.length-1].title){
+                    finalArray[finalArray.length-1].items.push(newList[i]);
+                }else{
+                    finalArray[finalArray.length]={title:day,items:[newList[i]]};
+                }
+
             }
-            return hashTable;
+            return finalArray;
         }
 
         created() {
             this.$store.commit('fetchConsumption');
             //标签数据
             this.$store.commit('fetchLabel');
+        }
+
+        beauty(title: string){
+            const day=dayjs(title);
+            const now=dayjs();
+            if(day.isSame(now,'day')){
+                return '今天';
+            }else if(day.isSame(now.subtract(1,'day'),'day')){
+                return '昨天';
+            }else if(day.isSame(now.subtract(2,'day'),'day')){
+                return '前天'
+            }else{
+                if(day.isSame(now,'year')){
+                    return day.format('MM月DD日');
+                }else{
+                    return day.format('YYYY年MM月D日');
+                }
+            }
+
         }
 
     }
