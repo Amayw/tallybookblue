@@ -31,8 +31,7 @@ type RootState = {
     tagsList: LabelItem[];
     currentTag?: LabelItem;
 }
-// @ts-ignore
-// @ts-ignore
+
 const store = new Vuex.Store({
     state: {
         consumptionList: [],
@@ -46,7 +45,7 @@ const store = new Vuex.Store({
         },
         addConsumption(state, consumption) {
             const newConsumption = clone(consumption);
-            newConsumption.createAt = new Date();
+            newConsumption.createAt = new Date().toISOString();
             state.consumptionList.push(newConsumption);
             store.commit('saveConsumption');
         },

@@ -3,7 +3,7 @@ type ConsumptionItem = {
     selectedTagId: number;
     money: string;
     notes: string;
-    createAt?: Date;
+    createAt?: string;
 }
 
 type LabelItem={

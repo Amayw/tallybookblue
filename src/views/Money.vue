@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div class="money">
-            <Tabs :category.sync="consumption.category" :types="['支出','收入']"/>
+            <Category :category.sync="consumption.category"/>
             <Tags :tagsList="tagsList" :selectedTagId.sync="consumption.selectedTagId"/>
             <NumberPad :money.sync="consumption.money" :notes.sync="consumption.notes" @submit="addConsumption"/>
         </div>
@@ -13,11 +13,11 @@
     import Tags from '@/components/money/Tags.vue';
     import NumberPad from '@/components/money/NumberPad.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import Tabs from '@/components/Tabs.vue';
+    import Category from '@/components/money/Category.vue';
 
 
     @Component({
-        components: {Tabs, Tags, NumberPad}
+        components: {Category, Tags, NumberPad}
     })
     export default class Money extends Vue {
         get consumptionList() {
@@ -30,7 +30,7 @@
 
         //每次记账的消费记录
         consumption: ConsumptionItem = {
-            category: '支出',
+            category: '1',
             selectedTagId: 1,
             money: '0',
             notes: ''
@@ -51,7 +51,7 @@
         @Watch('consumptionList')
         onConsumptionListChange() {
             this.consumption = {
-                category: '支出',
+                category: '1',
                 selectedTagId: 1,
                 money: '0',
                 notes: ''

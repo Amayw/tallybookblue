@@ -1,8 +1,8 @@
 <template>
     <div class="category">
         <ul>
-            <li :class="{active:category==='1',[classPrefix+'-item']:classPrefix}" @click="changeCategory('1')">支出</li>
-            <li :class="{active:category==='2',[classPrefix+'-item']:classPrefix}" @click="changeCategory('2')">收入</li>
+            <li :class="category==='1'&&'active'" @click="changeCategory('1')">支出</li>
+            <li :class="category==='2'&&'active'" @click="changeCategory('2')">收入</li>
         </ul>
     </div>
 </template>
@@ -14,7 +14,6 @@
     @Component
     export default class Category extends Vue{
         @Prop(String) readonly category!: '1'|'2';//'1'表示支出，'2'表示收入
-        @Prop(String) classPrefix?: string;
         changeCategory(type: string){
             if(type!=='1'&&type!=='2'){
                 return new Error('type is  unknown');
@@ -32,6 +31,7 @@
         justify-content: center;
         align-items: center;
         padding: 10px 0;
+        height: 7vh;
         >ul{
             background: #ededed;
             display: flex;
@@ -45,9 +45,9 @@
                 font-size: 8px;
                 padding: 4px 20px;
                 border-radius: 8px;
-            }
-            >li.active{
-                background: #fefefe;
+                &.active{
+                    background: #fefefe;
+                }
             }
         }
     }
