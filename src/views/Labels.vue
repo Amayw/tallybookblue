@@ -1,22 +1,26 @@
 <template>
     <Layout>
-        <header>
-            <Icon name=""/>
-            标签管理
-            <div class="right" @click="addLabel">
-                <Icon name="icon-jia"/>
+        <div class="labelContent">
+            <header>
+                <Icon name=""/>
+                标签管理
+                <div class="right" @click="addLabel">
+                    <Icon name="icon-jia"/>
+                </div>
+            </header>
+            <div class="labels">
+                    <router-link v-for="tag in tagsList" :key="tag.id" class="link" :to="`labels/edit/${tag.id}`">
+                        <div class="item">
+                            <div class="left">
+                                <Icon :name="tag.icon"/>
+                            </div>
+                            <div class="right">
+                                <span>{{tag.name}}</span>
+                                <Icon class="more" name="icon-gengduo1"/>
+                            </div>
+                        </div>
+                    </router-link>
             </div>
-        </header>
-        <div class="labels">
-            <router-link class="item" :to="`labels/edit/${tag.id}`" v-for="tag in tagsList" :key="tag.id">
-                <div class="left">
-                    <Icon :name="tag.icon"/>
-                </div>
-                <div class="right">
-                    <span>{{tag.name}}</span>
-                    <Icon class="more" name="icon-gengduo1"/>
-                </div>
-            </router-link>
         </div>
     </Layout>
 </template>
@@ -45,6 +49,10 @@
         addLabel() {
             const name = window.prompt('请输入新标签名');
             if (!name) {
+                window.alert('标签名不能为空哦~')
+                return;
+            }else if(name.length>4){
+                window.alert('标签名称不能超过4个字符哦~');
                 return;
             } else {
                 this.label.name = name!;
@@ -57,58 +65,70 @@
 </script>
 
 <style lang="scss" scoped>
-    header {
-        height: 6vh;
-        color: #4e4e4e;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .labelContent {
+        height: 92vh;
+        overflow: hidden;
 
-        .right{
-           >.icon {
-               /*border: 1px solid red;*/
-               background: #a5c9c0;
-               color: #fff;
-               margin-right: 10px;
-               border-radius: 50%;
-               padding: 4px;
-           }
-        }
-
-    }
-
-    .labels {
-        background: #fefefe;
-        overflow: auto;
-        height: 86vh;
-        display: flex;
-        flex-direction: column;
-
-        > .item {
-            margin: 10px 10px 10px 2px;
+        > header {
+            height: 6vh;
+            color: #4e4e4e;
             display: flex;
-
-            .left {
-                width: 16vw;
-                display: flex;
-                justify-content: space-around;
-
-                .icon {
-                    width: 40px;
-                    height: 40px;
-                }
-            }
+            justify-content: space-between;
+            align-items: center;
 
             .right {
-                flex-grow: 1;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                > .more {
-                    color: #9e9e9e;
+                > .icon {
+                    width: 20px;
+                    height: 20px;
+                    background: #a5c9c0;
+                    color: #fff;
+                    margin-right: 10px;
+                    border-radius: 50%;
+                    padding: 4px;
                 }
+            }
+
+        }
+
+        > .labels {
+            background: #fefefe;
+            display: flex;
+            height: 86vh;
+            flex-direction: column;
+            overflow: auto;
+
+            > .link {
+                >.item{
+                    display: flex;
+                    padding: 10px 10px 10px 2px;
+                    width: 99vw;
+                    align-items: center;
+
+                    > .left {
+                        width: 16vw;
+                        display: flex;
+                        justify-content: space-around;
+
+                        .icon {
+                            width: 36px;
+                            height: 36px;
+                        }
+                    }
+
+                    > .right {
+                        flex-grow: 1;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        > .more {
+                            color: #9e9e9e;
+                        }
+                    }
+                }
+
             }
         }
     }
+
+
 </style>

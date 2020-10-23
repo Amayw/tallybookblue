@@ -21,7 +21,8 @@
                         <li class="recordItems" :key="record.createAt" v-for="record in hash.items">
                             <div class="iconAddName">
                                 <Icon :name="tagsList[record.selectedTagId].icon"></Icon>
-                                {{tagsList[record.selectedTagId].name}}
+                                <span class="name">{{tagsList[record.selectedTagId].name}}</span>
+                                <span class="notes">{{record.notes}}</span>
                             </div>
                             <div class="money">￥{{record.money}}</div>
                         </li>
@@ -132,11 +133,10 @@
             display: flex;
             flex-direction: column;
             overflow: auto;
-            height: 81vh;
+            height: 82vh;
             padding: 10px 0;
             > .hashItem {
                 display: flex;
-
                 > .displayRecord {
                     width: 100vw;
 
@@ -155,7 +155,7 @@
                         &.recordItems {
                             background: #f8f9f4;
                             padding: 10px;
-                            margin: 4px;
+                            margin: 8px;
                             border-radius: 6px;
 
                             > .iconAddName {
@@ -163,11 +163,34 @@
                                 align-items: center;
                                 justify-content: center;
 
+                                >span{
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    &.name{
+                                        max-width: 20vw;
+                                    }
+
+                                    &.notes{
+                                        color: #9e9e9e;
+                                        font-size: 12px;
+                                        margin-left: 4px;
+                                        max-width: 40vw;
+                                        text-overflow: ellipsis;
+                                    }
+                                }
+
                                 > .icon {
                                     width: 24px;
                                     height: 24px;
-                                    margin-right: 4px;
+                                    margin-right: 8px;
                                 }
+                            }
+
+                            >.money{
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                max-width: 20vw;
                             }
                         }
                     }

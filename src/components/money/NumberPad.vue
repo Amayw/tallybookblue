@@ -190,27 +190,30 @@
             display: flex;
             justify-content: center;
             margin: 6px 0 2px 0;
-
             > input, div {
-                border: 1px solid #000;
                 padding: 8px;
                 outline: none;
                 background: #fefefe;
-                font-size: 8px;
+                font-size: 12px;
 
                 &.left {
-                    width: 60vw;
-                    border-right: red;
-                    border-top-left-radius: 8px;
-                    border-bottom-left-radius: 8px;
+                    width: 62vw;
+                    border: none;
+                    border-radius: 8px 0 0 8px;
+                    box-shadow: none;
+
                 }
 
                 &.right {
-                    width: 30vw;
+                    border: none;
+                    width: 32vw;
                     border-left: #fefefe;
                     border-top-right-radius: 8px;
                     border-bottom-right-radius: 8px;
                     text-align: right;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
         }

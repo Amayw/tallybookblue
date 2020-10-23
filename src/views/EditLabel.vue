@@ -10,7 +10,7 @@
         </header>
         <div class="edit">
             <Icon :name="iconList[selectedId-1].icon"/>
-            <input placeholder="标签名称" :value="newName" @input="newName=$event.target.value"/>
+            <input placeholder="标签名称不能超过4个字符哦~" :value="newName" @input="newName=$event.target.value"/>
         </div>
         <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"/>
     </div>
@@ -139,6 +139,10 @@
         update() {
             if (this.newName === '') {
                 this.newName = this.currentTag.name;
+            }else if(this.newName.length>4){
+                window.alert('标签名称不能超过4个字符哦~');
+                this.newName = this.currentTag.name;
+                return;
             }
             this.$store.commit('updateLabel', {
                 id: this.id,
@@ -184,7 +188,7 @@
         > .edit {
             margin: 20px;
             display: flex;
-
+            align-items: center;
             > .icon {
                 width: 36px;
                 height: 36px;
@@ -192,9 +196,12 @@
             }
 
             > input {
+
                 width: 90vw;
                 outline: none;
                 border: none;
+                font-size: 20px;
+
             }
         }
 
