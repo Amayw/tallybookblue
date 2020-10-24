@@ -11,6 +11,7 @@
         <div class="edit">
             <Icon :name="iconList[selectedId-1].icon"/>
             <input placeholder="标签名称不能超过4个字符哦~" :value="newName" @input="newName=$event.target.value"/>
+            <Icon class="delete" name="icon-shanchu" @click="remove"/>
         </div>
         <Tags class="icons" :tags-list="iconList" :selected-tag-id.sync="selectedId"/>
     </div>
@@ -149,14 +150,15 @@
                 name: this.newName,
                 icon: this.iconList[this.selectedId - 1].icon
             });
-            // if(res==='success'){
                 this.back();
-            // }else if(res==='nolabel'){
-            //     window.alert('标签不存在！');
-            // }
+        }
+
+        remove(){
+            this.$store.commit('removeLabel',this.id);
+            this.back();
         }
     }
-</script>
+</script>s
 
 <style lang="scss" scoped>
     .wrapper {
@@ -193,15 +195,18 @@
                 width: 36px;
                 height: 36px;
                 margin-right: 10px;
+                &.delete{
+                    width: 32px;
+                    height: 32px;
+                    color: #eb4d3d;
+                }
             }
 
             > input {
-
                 width: 90vw;
                 outline: none;
                 border: none;
                 font-size: 20px;
-
             }
         }
 

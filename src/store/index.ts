@@ -68,8 +68,19 @@ const store = new Vuex.Store({
             label.icon = icon;
             store.commit('saveLabel');
         },
+        removeLabel(state,id: string){
+            const ids=state.consumptionList.filter(item=>item.selectedTagId===parseInt(id));
+            console.log(ids);
+            if(ids.length>0){
+                console.log('here');
+                window.alert('当前标签有消费记录，不能删除哦~')
+            }else{
+                console.log('there');
+                state.tagsList.splice(parseInt(id),1);
+            }
+            store.commit('saveLabel');
+        },
         saveLabel(state) {
-            console.log(state.tagsList);
             window.localStorage.setItem('label', JSON.stringify(state.tagsList));
         },
         setCurrentTag(state, id: string) {

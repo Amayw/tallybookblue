@@ -197,6 +197,7 @@
                 font-size: 12px;
 
                 &.left {
+                    margin-left: 10px;
                     width: 62vw;
                     border: none;
                     border-radius: 8px 0 0 8px;
@@ -205,6 +206,7 @@
                 }
 
                 &.right {
+                    margin-right: 10px;
                     border: none;
                     width: 32vw;
                     border-left: #fefefe;

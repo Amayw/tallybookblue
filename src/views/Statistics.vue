@@ -3,7 +3,7 @@
         <div class="staContent">
             <Category :category.sync="category"/>
 <!--            <Tabs :displayMode.sync="displayMode"/>-->
-            <div v-if="JSON.stringify(group)===JSON.stringify([])" class="noRecord">
+            <div v-if="group.length===0" class="noRecord">
                 <div>空空如也~</div>
                 <div>
                     <span>快去</span>
@@ -61,9 +61,9 @@
 
         get group() {
             const {consumptionList} = this;
-            if(consumptionList.length===0) {return [];}
             type HashTable={title: string; total?: string; items: ConsumptionItem[]};
             const newList=clone(consumptionList).filter((item: ConsumptionItem)=>item.category===this.category).sort((a: ConsumptionItem, b: ConsumptionItem)=>dayjs(b.createAt).valueOf()-dayjs(a.createAt).valueOf());
+            if(newList.length===0) {return [];}
             const finalArray: HashTable[]=[{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items:[newList[0]]}]
             for(let i=1;i<newList.length;i++){
                 const day=dayjs(newList[i].createAt).format('YYYY-MM-DD');
