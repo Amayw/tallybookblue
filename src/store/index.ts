@@ -76,9 +76,11 @@ const store = new Vuex.Store({
                 window.alert('当前标签有消费记录，不能删除哦~')
             }else{
                 console.log('there');
-                state.tagsList.splice(parseInt(id),1);
+                console.log(id);
+                state.tagsList=state.tagsList.filter(item=>item.id!==parseInt(id));
+                store.commit('saveLabel');
+                console.log('成功');
             }
-            store.commit('saveLabel');
         },
         saveLabel(state) {
             window.localStorage.setItem('label', JSON.stringify(state.tagsList));

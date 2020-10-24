@@ -88,6 +88,11 @@
             }
         }
 
+        isResZero(str: string){
+            const res=Array.from(str).filter(item=>item!=='.'&&item!=='0')
+            return res.length === 0;
+        }
+
         sumMoney(e: MouseEvent) {
             const button = (e.target as HTMLButtonElement);
             const text = button.textContent!;
@@ -171,10 +176,17 @@
                 } else if (this.output.indexOf('-') >= 0) {
                     //判断是否有待计算的减运算
                     this.output = this.sub(this.output)!;
-                } else if (this.isNum(this.output)) {
+                } else if(this.isResZero(this.output)){
+                    window.alert('请输入正确记账金额哦~');
+                }else if (this.isNum(this.output)) {
                     //判断金额是否为数字，排除'3.'这种情况
-                    this.$emit('update:money', this.isFloat(this.output));
-                    this.$emit('submit',this.isFloat(this.output));
+                    //判断金额四舍五入后是否为0
+                    if(this.isResZero(this.isFloat(this.output)!)){
+                        window.alert('请输入正确的记账金额哦'+'(小数四舍五入精确到小数点后两位哦)'+'~');
+                        return;
+                    }
+                    this.$emit('update:money',this.isFloat(this.output) );
+                    this.$emit('submit',this.isFloat(this.output) );
                     this.output=this.money;
                 }
             }

@@ -34,6 +34,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: first;
         > li {
             display: flex;
             flex-direction: column;
@@ -55,6 +56,9 @@
                 border: 1px solid #9fc4b7;
                 border-radius: 10px;
             }
+        }
+        >li:before,li:after{
+            content: "";
         }
     }
 </style>
