@@ -24,6 +24,6 @@ window.onload=function(){
     },0)
 }
 
-if(document.documentElement.clientWidth>500){
-    window.alert('建议使用手机打开页面，以保证浏览效果哦~')
-}
+// if(document.documentElement.clientWidth>500){
+//     window.alert('建议使用手机打开页面，以保证浏览效果哦~')
+// }

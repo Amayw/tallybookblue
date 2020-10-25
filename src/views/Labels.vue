@@ -96,25 +96,21 @@
             height: 86vh;
             flex-direction: column;
             overflow: auto;
-
+            /*width: 100vw;*/;
             > .link {
                 >.item{
                     display: flex;
                     padding: 10px 10px 10px 2px;
-                    width: 99vw;
                     align-items: center;
-
                     > .left {
                         width: 16vw;
                         display: flex;
                         justify-content: space-around;
-
                         .icon {
                             width: 36px;
                             height: 36px;
                         }
                     }
-
                     > .right {
                         flex-grow: 1;
                         display: flex;

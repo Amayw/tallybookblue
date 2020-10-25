@@ -40,15 +40,13 @@
             this.$store.commit('fetchConsumption');
             //标签数据
             this.$store.commit('fetchLabel');
-
+            this.consumption.selectedTagId=this.tagsList[0].id;
         }
 
 
         addConsumption() {
             this.$store.commit('addConsumption', this.consumption);
-            console.log(this.consumption.money);
             if(this.consumption.money.split('.')[1]==='00'){
-                console.log(this.consumption.money);
                 window.alert('记账成功！' + this.consumption.notes + ' ' + this.consumption.money + '元');
             }else{
                 window.alert('记账成功！' + this.consumption.notes + ' ' + this.consumption.money + '元'+'(小数四舍五入精确到小数点后两位哦)');

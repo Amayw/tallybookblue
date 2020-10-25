@@ -165,7 +165,7 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
-
+        width: 100vw;
         > header {
             display: flex;
             justify-content: space-between;

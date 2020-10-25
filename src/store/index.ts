@@ -15,15 +15,13 @@ const labelList = [
     {id: 8, icon: 'icon-pet1', name: '宠物'},
     {id: 9, icon: 'icon-lottery1', name: '彩票'},
     {id: 10, icon: 'icon-traffic5', name: '交通'},
-    {id: 11, icon: 'icon-wage2', name: '工资'},
-    {id: 12, icon: 'icon-home3', name: '住房'},
-    {id: 13, icon: 'icon-medical2', name: '医疗'},
-    {id: 14, icon: 'icon-fun2', name: '娱乐'},
-    {id: 15, icon: 'icon-baby2', name: '母婴'},
-    {id: 16, icon: 'icon-car2', name: '汽车'},
-    {id: 17, icon: 'icon-parent1', name: '长辈'},
-    {id: 18, icon: 'icon-communication4', name: '通讯'},
-    {id: 19, icon: 'icon-digital2', name: '数码'}
+    {id: 11, icon: 'icon-home3', name: '住房'},
+    {id: 12, icon: 'icon-medical2', name: '医疗'},
+    {id: 13, icon: 'icon-fun2', name: '娱乐'},
+    {id: 14, icon: 'icon-baby2', name: '母婴'},
+    {id: 15, icon: 'icon-car2', name: '汽车'},
+    {id: 16, icon: 'icon-communication4', name: '通讯'},
+    {id: 17, icon: 'icon-digital2', name: '数码'}
 ];
 
 type RootState = {
@@ -69,18 +67,21 @@ const store = new Vuex.Store({
             store.commit('saveLabel');
         },
         removeLabel(state,id: string){
-            const ids=state.consumptionList.filter(item=>item.selectedTagId===parseInt(id));
-            console.log(ids);
-            if(ids.length>0){
-                console.log('here');
-                window.alert('当前标签有消费记录，不能删除哦~')
+            if(state.tagsList.length>10){
+                const ids=state.consumptionList.filter(item=>item.selectedTagId===parseInt(id));
+                if(ids.length>0){
+                    window.alert('当前标签有消费记录，不能删除哦~')
+                }else{
+                    console.log('there');
+                    console.log(id);
+                    state.tagsList=state.tagsList.filter(item=>item.id!==parseInt(id));
+                    store.commit('saveLabel');
+                    console.log('成功');
+                }
             }else{
-                console.log('there');
-                console.log(id);
-                state.tagsList=state.tagsList.filter(item=>item.id!==parseInt(id));
-                store.commit('saveLabel');
-                console.log('成功');
+                window.alert('不要删好不啦，再删宝宝就小于10了呢');
             }
+
         },
         saveLabel(state) {
             window.localStorage.setItem('label', JSON.stringify(state.tagsList));
